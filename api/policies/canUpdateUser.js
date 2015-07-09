@@ -4,7 +4,7 @@ module.exports = function canUpdateUser (req, res, next) {
 	}
 
 	var targetId = req.param('record');
-	var userId = req.session.user.id;
+	var userId = req.session.currentUser.id;
 
 	if(targetId != userId){
 		return res.forbidden();

@@ -37,21 +37,6 @@
         action: 'index'
     },
 
-    'GET /login':{
-        controller: 'AuthController',
-        action: 'loginView'
-    },
-
-    'POST /auth':{
-        controller: 'AuthController',
-        action: 'login'
-    },
-
-    'GET /logout':{
-        controller: 'AuthController',
-        action: 'logout'
-    },
-
     'POST /user/:id/borrow': {
         controller: 'UserController',
         action: 'borrowBook'

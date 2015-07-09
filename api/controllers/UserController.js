@@ -11,8 +11,6 @@ module.exports = {
 			return res.badRequest();
 		}
 
-		var fromUser = 
-
 		return res.send("yolo");
 	}
 };

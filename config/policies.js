@@ -48,15 +48,4 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
-
-  UserController:{
-    add: 'canUpdateUser',
-    remove: 'canUpdateUser',
-    update: 'canUpdateUser',
-    populate: 'canUpdateUser'
-  },
-
-  HomeController:{
-    index: 'isLoggedIn'
-  }
 };
