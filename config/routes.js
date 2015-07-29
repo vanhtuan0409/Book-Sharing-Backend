@@ -32,15 +32,40 @@
   *                                                                          *
   ***************************************************************************/
 
-    '/': {
-        controller: 'ViewController',
-        action: 'index'
+    // '/': {
+    //     controller: 'ViewController',
+    //     action: 'index'
+    // },
+
+    // '/profile': {
+    //     controller: 'ViewController',
+    //     action: 'profile'
+    // },
+
+    // '/book': {
+    //     controller: 'ViewController',
+    //     action: 'book'
+    // },
+
+    'POST /auth': {
+        controller: 'AuthController',
+        action: 'login'
     },
 
-    'POST /user/:id/borrow': {
+    'POST /api/user/:id/borrow': {
         controller: 'UserController',
         action: 'borrowBook'
     },
+
+    'POST /api/user/:id/rating': {
+        controller: 'UserController',
+        action: 'rateUser'
+    },
+
+    'GET /api/user/:id/searchLocation': {
+        controller: 'UserController',
+        action: 'searchBookByLocation'
+    }, 
 
 
   /***************************************************************************

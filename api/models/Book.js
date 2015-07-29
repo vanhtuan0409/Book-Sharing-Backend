@@ -28,13 +28,25 @@ module.exports = {
 			collection: 'user',
 			via: 'books'
 		},
+		comments:{
+			collection: 'book_comment',
+			via: 'book'
+		},
 		description: 'string',
 		type: 'string'
 	},
-	beforeCreate: function(values, cb){
-		values.bookname = values.bookname.toLowerCase();
-		values.author = values.author.toLowerCase();
-		cb();
-	},
+	checkBookExist: function(bookId){
+		var promise = new Promise(function(resolve, reject){
+			Book.findOne(bookId).then(function(obj){
+				if(obj){
+					resolve(true);
+				}
+				resolve(false);
+			}).catch(function(error){
+				resolve(false);
+			})
+		});
+		return promise;
+	}
 };
 

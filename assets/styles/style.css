@@ -1,0 +1,68 @@
+#brand-name{
+	padding: 0px 20px 0px 20px;
+	position: relative;
+	float: left;
+}
+.container{
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 100%!important;
+}
+.book-category .card img{
+	width: 100%;
+}
+.book-category h4{
+	display: inline-block;
+	margin-right: 15px;
+}
+.book-category h5+a{
+	font-size: 13px;	
+}
+.lender{
+	margin-top: 10px;
+}
+.footer-copyright{
+	padding: 15px;
+	color: white;
+}
+[type="radio"]:checked + label:after{
+	border: 2px solid #5c6bc0;
+	background-color: #5c6bc0;
+}
+.profile{
+	width: 100%;
+	height: 315px;
+	position: relative;
+}
+.avatar{
+	width: 120px;
+	height: 120px;
+}
+.profile-info{
+	position: absolute;
+	bottom: 0px;
+	padding-left: 50px;
+	padding-right: 50px;
+	width: 100%;
+}
+.profile-info h2{
+	margin: 0.8rem 0 0.8rem 0;
+}
+.card .card-content p{
+	margin: 0.8rem 0 0.8rem 0;
+}
+.card .card-content .collection{
+	border: none;
+}
+.card .card-content .collection .collection-item{
+	border: none;
+	padding: 0px;
+	margin: 0.8rem 0 0.8rem 0;
+	color: #3f51b5;
+}
+.book-list img{
+	width: 50px;
+}
+.book-list tr{
+	cursor: pointer;
+}

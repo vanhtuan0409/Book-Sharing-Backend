@@ -8,6 +8,12 @@
 module.exports = {
 	index: function(req,res){
 		return res.view('homepage');
+	},
+	profile: function(req,res){
+		return res.view('profile');
+	},
+	book: function(req,res){
+		return res.view('book');
 	}
 };
 

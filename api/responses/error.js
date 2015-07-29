@@ -26,7 +26,7 @@ module.exports = function sendOK (data, options) {
   // If appropriate, serve data as JSON(P)
   if (req.wantsJSON) {
     return res.jsonx({
-      error: false,
+      error: true,
       content: data
     });
   }
