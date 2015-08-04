@@ -47,7 +47,7 @@
     //     action: 'book'
     // },
 
-    'POST /auth': {
+    'POST /api/auth': {
         controller: 'AuthController',
         action: 'login'
     },
@@ -55,6 +55,11 @@
     'POST /api/user/:id/borrow': {
         controller: 'UserController',
         action: 'borrowBook'
+    },
+
+    'POST /api/user/:id/addBook': {
+        controller: 'UserController',
+        action: 'addBook'
     },
 
     'POST /api/user/:id/rating': {

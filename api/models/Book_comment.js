@@ -9,19 +9,17 @@ module.exports = {
 	tableName: 'book_comment',
 	attributes: {
 		id:{
-			type: 'string',
+			type: 'integer',
 			primaryKey: true,
-			uuidv4: true,
-			required:true,
-			defaultsTo: function() { return uuid.v4(); }
+			autoIncrement: true
 		},
 		book: {
 			model: 'book'
 		},
-		user: {
+		fromUser: {
 			model: 'user'
 		},
-		comment: {
+		message: {
 			type: 'string',
 			required: true
 		}

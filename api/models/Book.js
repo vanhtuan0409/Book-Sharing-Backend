@@ -9,11 +9,9 @@ module.exports = {
 	tableName: 'book',
 	attributes: {
 		id:{
-			type: 'string',
+			type: 'integer',
 			primaryKey: true,
-			uuidv4: true,
-			required:true,
-			defaultsTo: function() { return uuid.v4(); }
+			autoIncrement: true
 		},
 		bookname: {
 			type: 'string',
@@ -21,7 +19,7 @@ module.exports = {
 			required: true
 		},
 		author: {
-			type: 'string',
+			type: 'array',
 			required: true
 		},
 		owners: {
@@ -31,6 +29,10 @@ module.exports = {
 		comments:{
 			collection: 'book_comment',
 			via: 'book'
+		},
+		url:{
+			type: 'string',
+			defaultsTo: 'img/book/default.jpg'
 		},
 		description: 'string',
 		type: 'string'

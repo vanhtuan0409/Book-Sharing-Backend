@@ -12,27 +12,29 @@ module.exports = {
 	tableName: 'user',
 	attributes: {
 		id:{
-			type: 'string',
+			type: 'integer',
 			primaryKey: true,
-			uuidv4: true,
-			required:true,
-			defaultsTo: function() { return uuid.v4(); }
+			autoIncrement: true
+		},
+		facebookId: {
+			type: 'string',
+			required: true,
+			unique: true
 		},
 		name: {
 			type: 'string',
-			required: true
+			// required: true
 		},
 		email:{
 			type: 'email',
-			required: true,
+			// required: true,
 			unique: true,
 		},
 		password:{
 			type: 'string',
-			required: true,
+			// required: true,
 			protected: true
 		},
-		dob:'date',
 		location: 'string',
 		placeToTrade: {
 			type: 'array',
@@ -46,6 +48,10 @@ module.exports = {
 			type: 'integer',
 			required: true,
 			defaultsTo: 100
+		},
+		url: {
+			type: 'string',
+			defaultsTo: 'img/avatar/default.png'
 		},
 		books:{
 			collection: 'book',
@@ -133,6 +139,37 @@ module.exports = {
 		});
 		return promise;	
 	},
-	
+	addBook: function(userId, bookObj, isBook){
+		var promise = new Promise(function(resolve, reject){
+			Book.findOrCreate(bookObj).then(function(book){
+				User.findOne(userId).populate('books').populate('recommendation').then(function(user){
+					if(isBook){
+						user.books.add(book.id);
+						user.save(function(err,res){
+							if(err){
+								reject(err);
+							} else {
+								resolve(res);
+							}
+						})
+					} else {
+						user.recommendation.add(book.id);
+						user.save(function(err,res){
+							if(err){
+								reject(err);
+							} else {
+								resolve(res);
+							}
+						})
+					}
+				}).catch(function(err){
+					reject(err);
+				})
+			}).catch(function(err){
+				reject(err);
+			})
+		});
+		return promise;
+	}
 };
 

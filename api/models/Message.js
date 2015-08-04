@@ -10,13 +10,15 @@ module.exports = {
 	tableName: 'message',
 	attributes: {
 		id:{
-			type: 'string',
+			type: 'integer',
 			primaryKey: true,
-			uuidv4: true,
-			required:true,
-			defaultsTo: function() { return uuid.v4(); }
+			autoIncrement: true
 		},
 		fromUser:{
+			model: 'user',
+			required: true
+		},
+		toUser:{
 			model: 'user',
 			required: true
 		},

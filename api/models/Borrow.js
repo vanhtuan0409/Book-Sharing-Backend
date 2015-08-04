@@ -9,11 +9,9 @@ module.exports = {
 	tableName: 'book_borrow',
 	attributes: {
 		id:{
-			type: 'string',
+			type: 'integer',
 			primaryKey: true,
-			uuidv4: true,
-			required:true,
-			defaultsTo: function() { return uuid.v4(); }
+			autoIncrement: true
 		},
 		fromUser:{
 			model: 'user',
@@ -29,14 +27,13 @@ module.exports = {
 		},
 		startDate: 'date',
 		returnDate: 'date',
-		location: 'string',
 		messages:{
 			collection: 'message',
 			via: 'borrow',
 		},
 		status:{
 			type: 'string',
-			enum: ['init', 'pending', 'approved', 'denied', 'returned'],
+			enum: ['init', 'ongoing', 'closed'],
 			defaultsTo: 'init',
 			required: true
 		}
@@ -62,7 +59,7 @@ module.exports = {
 		});
 		return promise
 	},
-	borrow: function(fromId, toId, bookId, startD, returnD, location, message){
+	borrow: function(fromId, toId, bookId, startD, returnD, message){
 		var borrowId;
 
 		var promise = new Promise(function(resolve, reject){
@@ -96,8 +93,7 @@ module.exports = {
 						toUser:toId,
 						book:bookId,
 						startDate:startD,
-						returnDate:returnD,
-						location: location
+						returnDate:returnD
 					}).then(function(borrow){
 						borrowId = borrow.id;
 						re({
@@ -105,6 +101,7 @@ module.exports = {
 							book: borrow
 						});
 					}).catch(function(err){
+						console.log(err);
 						re({
 							code: false,
 							book: null
@@ -117,8 +114,16 @@ module.exports = {
 					throw new Error("Error create borrow");
 				}
 				var p = new Promise(function(re, rej){
+					if(message.length<=0){
+						re({
+							code:true,
+							msg: null
+						});
+						return;
+					}
 					Message.create({
 						fromUser: fromId,
+						toUser: toId,
 						borrow: obj.book.id,
 						message: message
 					}).then(function(msg){

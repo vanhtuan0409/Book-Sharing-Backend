@@ -15,10 +15,9 @@ module.exports = {
 		var bookId = req.param("requestBook");
 		var startDate = req.param("startDate");
 		var returnDate = req.param("returnDate");
-		var location = req.param("location");
 		var message = req.param("message");
 
-		Borrow.borrow(fromId, toId, bookId, startDate, returnDate, location, message).then(function(msg){
+		Borrow.borrow(fromId, toId, bookId, startDate, returnDate, message).then(function(msg){
 			return res.ok(msg);
 		}).catch(function(err){
 			return res.error(err);
@@ -44,6 +43,25 @@ module.exports = {
 
 		User_rating.rateUser(userId, toUser, msg).then(function(msg){
 			return res.ok(msg);
+		}).catch(function(err){
+			return res.error(err);
+		})
+	},
+	addBook: function(req, res){
+		var userId = req.param("id");
+
+		var bookObj = {
+			'bookname': req.param("bookname"),
+			'author': req.param("author"),
+			'url': req.param("url"),
+			'description': req.param("description"),
+			'type': req.param("type")
+		};
+
+		var isBook = req.param("isBook");
+
+		User.addBook(userId, bookObj, isBook).then(function(result){
+			return res.ok(result);
 		}).catch(function(err){
 			return res.error(err);
 		})
