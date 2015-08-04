@@ -141,10 +141,8 @@ module.exports = {
 	},
 	addBook: function(userId, bookObj, isBook){
 		var promise = new Promise(function(resolve, reject){
-			console.log(bookObj);
 			Book.findOrCreate({bookname: bookObj.bookname}, bookObj).then(function(book){
 				User.findOne(userId).populate('books').populate('recommendation').then(function(user){
-					console.log(typeof isBook);
 					if(isBook){
 						user.books.add(book.id);
 						user.save(function(err,res){
@@ -161,7 +159,6 @@ module.exports = {
 								console.log(err);
 								reject(err);
 							} else {
-								console.log(res);
 								resolve(res);
 							}
 						})
