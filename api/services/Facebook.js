@@ -2,7 +2,7 @@ module.exports = {
 	login: function(token, proof, cb){
 		var http = require('https');
 		http.get(
-			"https://graph.facebook.com/me?fields=id,name,picture.type(large),email,friends&access_token="+token+"&appsecret_proof="+proof,
+			"https://graph.facebook.com/me?fields=id,name,picture.width(300).height(300),email,friends&access_token="+token+"&appsecret_proof="+proof,
 			function(response){
 				var body = '';
 				response.on('data', function(chunk) {
