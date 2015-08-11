@@ -75,7 +75,9 @@ module.exports = {
 		cb();
 	},
 	// afterCreate: function(values, cb){
-	// 	delete values.password;
+	// 	values.stat = {
+	// 		"book_owned": 10
+	// 	}
 	// 	cb();
 	// },
 	checkUserExist: function(userId){

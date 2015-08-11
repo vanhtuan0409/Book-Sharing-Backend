@@ -20,7 +20,6 @@ module.exports = {
 		},
 		author: {
 			type: 'array',
-			required: true
 		},
 		owners: {
 			collection: 'user',

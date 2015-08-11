@@ -6,6 +6,23 @@
  */
 
 module.exports = {
+	getStat: function(req,res){
+		var userId = req.param("id");
+		var stats = new Object();
+		User.findOne(userId).populate('books').populate('recommendation').then(function(data){
+			stats.book = data.books.length;
+			return Borrow.find({fromUser:userId});
+		}).then(function(data){
+			stats.borrow = data.length;
+			return Borrow.find({toUser:userId});
+		}).then(function(data){
+			stats.lend = data.length;
+			return res.ok(stats);
+		}).catch(function(err){
+			console.log(err);
+			return res.error(err);
+		})
+	},
 	borrowBook: function(req, res){
 		if(!req.param("requestToUser") || !req.param("requestBook")){
 			return res.badRequest();
