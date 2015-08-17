@@ -8,12 +8,21 @@ var md5 = require('MD5');
 var crypto = require('crypto');
 
 module.exports = {
+	getCurrentUser: function(req,res){
+		if(sails.session.user){
+			return res.ok(sails.session.user);
+		} else {
+			return res.error("No authentication provided");
+		}
+	},
+
 	login: function(req,res){
 		var token = req.param('token');
 		var proof = crypto.createHmac('SHA256', '04136abb6b35ae4a8aa394cf0f4250ba').update(token).digest('hex');
 		var fbId = req.param('facebookId');
 		User.findOne({facebookId: fbId}).then(function(user){
 			if(user){
+				sails.session.user = user;
 				return res.ok(user);
 			}
 			Facebook.login(token, proof, function(err, data){
@@ -36,8 +45,7 @@ module.exports = {
 		})
 	},
 	logout: function(req,res){
-		req.session.user = null;
-    	req.session.flash = 'You have logged out';
+		sails.session.user = null;
     	return res.ok("Logged out");
 	}
 };

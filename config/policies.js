@@ -48,9 +48,38 @@
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
-  
-  // UserController: {
-  //   update: 'isLoggedIn'
-  // }
+
+    UserController: {
+        find: 'isLoggedIn',
+        update: 'isLoggedIn',
+        getStat: 'isLoggedIn',
+        borrowBook: 'isLoggedIn',
+        rateUser: 'isLoggedIn',
+        addBook: 'isLoggedIn',
+    },
+
+    Book_commentController: {
+        create: 'isLoggedIn',
+        find: 'isLoggedIn',
+        update: 'isLoggedIn',
+    },
+
+    BorrowController: {
+        create: 'isLoggedIn',
+        find: 'isLoggedIn',
+        update: 'isLoggedIn',
+    },
+
+    MessageController: {
+        create: 'isLoggedIn',
+        find: 'isLoggedIn',
+        update: 'isLoggedIn',  
+    },
+
+    User_ratingController: {
+        create: 'isLoggedIn',
+        find: 'isLoggedIn',
+        update: 'isLoggedIn',
+    }
 
 };

@@ -47,6 +47,16 @@
     //     action: 'book'
     // },
 
+    'GET /api/auth':{
+        controller: 'AuthController',
+        action: 'getCurrentUser'
+    },
+
+    'GET /api/auth/logout':{
+        controller: 'AuthController',
+        action: 'logout'
+    },
+
     'POST /api/auth': {
         controller: 'AuthController',
         action: 'login'
