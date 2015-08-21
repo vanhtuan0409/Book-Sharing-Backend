@@ -1,9 +1,9 @@
 /**
-* User.js
-*
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
-*/
+ * User.js
+ *
+ * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @docs        :: http://sailsjs.org/#!documentation/models
+ */
 
 var uuid = require('uuid');
 var md5 = require('MD5');
@@ -11,7 +11,7 @@ var md5 = require('MD5');
 module.exports = {
 	tableName: 'user',
 	attributes: {
-		id:{
+		id: {
 			type: 'integer',
 			primaryKey: true,
 			autoIncrement: true
@@ -25,12 +25,12 @@ module.exports = {
 			type: 'string',
 			// required: true
 		},
-		email:{
+		email: {
 			type: 'email',
 			// required: true,
 			unique: true,
 		},
-		password:{
+		password: {
 			type: 'string',
 			// required: true,
 			protected: true
@@ -53,24 +53,24 @@ module.exports = {
 			type: 'string',
 			defaultsTo: 'img/avatar/default.png'
 		},
-		books:{
+		books: {
 			collection: 'book',
 			via: 'owners',
 			dominant: true
 		},
-		recommendation:{
+		recommendation: {
 			collection: 'book'
 		},
-		userRating:{
+		userRating: {
 			collection: 'user_rating',
 			via: 'toUser'
 		},
-		groups:{
+		groups: {
 			collection: 'group',
 			via: 'members'
 		}
 	},
-	beforeCreate: function(values, cb){
+	beforeCreate: function(values, cb) {
 		values.password = md5(values.password);
 		cb();
 	},
@@ -80,75 +80,79 @@ module.exports = {
 	// 	}
 	// 	cb();
 	// },
-	checkUserExist: function(userId){
-		var promise = new Promise(function(resolve, reject){
-			User.findOne(userId).then(function(obj){
-				if(obj){
+	checkUserExist: function(userId) {
+		var promise = new Promise(function(resolve, reject) {
+			User.findOne(userId).then(function(obj) {
+				if (obj) {
 					resolve(true);
 				}
 				resolve(false);
-			}).catch(function(){
+			}).catch(function() {
 				resolve(false);
 			})
 		});
 		return promise;
 	},
-	checkUserHaveBook: function(userId, bookId){
-		var promise = new Promise(function(resolve, reject){
-			User.findOne(userId).populate('books', {id:bookId}).then(function(user){
-				if(user.books[0]){
+	checkUserHaveBook: function(userId, bookId) {
+		var promise = new Promise(function(resolve, reject) {
+			User.findOne(userId).populate('books', {
+				id: bookId
+			}).then(function(user) {
+				if (user.books[0]) {
 					resolve(true);
 				}
 				resolve(false);
-			}).catch(function(){
+			}).catch(function() {
 				resolve(false);
 			})
 		});
 		return promise;
 	},
-	searchNearbyUser: function(userId, populateBook){
-		var promise = new Promise(function(resolve, reject){
-			User.findOne(userId).then(function(user){
+	searchNearbyUser: function(userId, populateBook) {
+		var promise = new Promise(function(resolve, reject) {
+			User.findOne(userId).then(function(user) {
 				var places = user.placeToTrade;
 				var arr = [];
-				for(var i = 0; i<places.length; i++){
+				for (var i = 0; i < places.length; i++) {
 					arr.push({
-						"placeToTrade":{
+						"placeToTrade": {
 							"contains": places[i]
 						}
 					})
 				}
 				var query = {
 					or: arr,
-					"id":{
+					"id": {
 						"!": user.id
 					}
 				}
 
-				if(populateBook){
-					User.find(query).populate("books").then(function(users){
+				if (populateBook) {
+					User.find(query).populate("books").then(function(users) {
 						resolve(users);
 					})
 				} else {
-					User.find(query).then(function(users){
+					User.find(query).then(function(users) {
 						var users = ArrayUtil.unique(users);
 						resolve(users);
 					})
 				}
-			}).catch(function(err){
+			}).catch(function(err) {
 				reject(err);
 			})
 		});
-		return promise;	
+		return promise;
 	},
-	addBook: function(userId, bookObj, isBook){
-		var promise = new Promise(function(resolve, reject){
-			Book.findOrCreate({bookname: bookObj.bookname}, bookObj).then(function(book){
-				User.findOne(userId).populate('books').populate('recommendation').then(function(user){
-					if(isBook){
+	addBook: function(userId, bookObj, isBook) {
+		var promise = new Promise(function(resolve, reject) {
+			Book.findOrCreate({
+				bookname: bookObj.bookname
+			}, bookObj).then(function(book) {
+				User.findOne(userId).populate('books').populate('recommendation').then(function(user) {
+					if (isBook) {
 						user.books.add(book.id);
-						user.save(function(err,res){
-							if(err){
+						user.save(function(err, res) {
+							if (err) {
 								reject(err);
 							} else {
 								resolve(res);
@@ -156,8 +160,8 @@ module.exports = {
 						})
 					} else {
 						user.recommendation.add(book.id);
-						user.save(function(err,res){
-							if(err){
+						user.save(function(err, res) {
+							if (err) {
 								console.log(err);
 								reject(err);
 							} else {
@@ -165,14 +169,37 @@ module.exports = {
 							}
 						})
 					}
-				}).catch(function(err){
+				}).catch(function(err) {
 					reject(err);
 				})
-			}).catch(function(err){
+			}).catch(function(err) {
 				reject(err);
 			})
 		});
 		return promise;
+	},
+	getStat: function(userId) {
+		var stats = new Object();
+
+		var promise = new Promise(function(resolve, reject) {
+			User.findOne(userId).populateAll().then(function(result) {
+				stats.book = result.books.length;
+				return Borrow.find({
+					fromUser: userId
+				});
+			}).then(function(data) {
+				stats.borrow = data.length;
+				return Borrow.find({
+					toUser: userId
+				});
+			}).then(function(data) {
+				stats.lend = data.length;
+				resolve(stats);
+			}).catch(function(err) {
+				reject(err);
+			})
+		});
+
+		return promise;
 	}
 };
-

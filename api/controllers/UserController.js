@@ -68,18 +68,12 @@ module.exports = {
 	},
 	findOne: function(req, res){
 		var userId = req.param("id");
-		var stats = new Object();
 		var user = null;
 
 		User.findOne(userId).populateAll().then(function(result){
-			stats.book = result.books.length;
 			user = result;
-			return Borrow.find({fromUser:userId});
-		}).then(function(data){
-			stats.borrow = data.length;
-			return Borrow.find({toUser:userId});
-		}).then(function(data){
-			stats.lend = data.length;
+			return User.getStat(userId);
+		}).then(function(stats){
 			user.stats = stats;
 			return res.ok(user);
 		}).catch(function(err){
