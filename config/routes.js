@@ -67,11 +67,6 @@
         action: 'borrowBook'
     },
 
-    'GET /api/user/:id/stat':{
-        controller: 'UserController',
-        action: 'getStat'
-    },
-
     'POST /api/user/:id/addBook': {
         controller: 'UserController',
         action: 'addBook'

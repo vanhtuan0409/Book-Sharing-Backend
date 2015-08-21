@@ -6,23 +6,6 @@
  */
 
 module.exports = {
-	getStat: function(req,res){
-		var userId = req.param("id");
-		var stats = new Object();
-		User.findOne(userId).populate('books').populate('recommendation').then(function(data){
-			stats.book = data.books.length;
-			return Borrow.find({fromUser:userId});
-		}).then(function(data){
-			stats.borrow = data.length;
-			return Borrow.find({toUser:userId});
-		}).then(function(data){
-			stats.lend = data.length;
-			return res.ok(stats);
-		}).catch(function(err){
-			console.log(err);
-			return res.error(err);
-		})
-	},
 	borrowBook: function(req, res){
 		if(!req.param("requestToUser") || !req.param("requestBook")){
 			return res.badRequest();
@@ -82,6 +65,27 @@ module.exports = {
 		}).catch(function(err){
 			return res.error(err);
 		})
-	}
+	},
+	findOne: function(req, res){
+		var userId = req.param("id");
+		var stats = new Object();
+		var user = null;
+
+		User.findOne(userId).populateAll().then(function(result){
+			stats.book = result.books.length;
+			user = result;
+			return Borrow.find({fromUser:userId});
+		}).then(function(data){
+			stats.borrow = data.length;
+			return Borrow.find({toUser:userId});
+		}).then(function(data){
+			stats.lend = data.length;
+			user.stats = stats;
+			return res.ok(user);
+		}).catch(function(err){
+			console.log(err);
+			return res.error(err);
+		})
+	},
 };
 
