@@ -133,12 +133,12 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
 * Data:
  ```
  {
-     bookname: ...,
-     author: ...,
-     url: ...,
-     description: ...,
-     type: ...,
-     isBook: true/false
+    bookname: ...,
+    author: ...,
+    url: ...,
+    description: ...,
+    type: ...,
+    isBook: true/false
  }
  ```
 * Response:
