@@ -45,7 +45,7 @@ module.exports = {
 				toUser: toId,
 				book: bookId,
 				status:{
-					'!': 'returned'
+					'!': 'closed'
 				}
 			}
 			Borrow.findOne(query).then(function(obj){
