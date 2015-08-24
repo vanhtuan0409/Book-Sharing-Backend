@@ -156,6 +156,10 @@ module.exports = {
 			});
 		});
 		return promise;
+	},
+	afterCreate: function(value, cb){
+		EmailUtil.sendEmail(value.toUser, "Book Sharing Notification", "You receive a new borrow request");
+		cb();
 	}
 };
 

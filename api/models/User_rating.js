@@ -30,49 +30,49 @@ module.exports = {
 		
 	},
 	rateUser: function(fromUser, toUser, mess){
-			var promise = new Promise(function(resolve, reject){
-				User.checkUserExist(fromUser).then(function(response){
-					if(!response){
-						throw new Error("User not exist");
-					}
-					return User.checkUserExist(toUser);
-				}).then(function(response){
-					if(!response){
-						throw new Error("User not exist");
-					}
-					var p = new Promise(function(re, rej){
-						User_rating.create({
-							fromUser: fromUser,
-							toUser: toUser,
-							comment: mess
-						}).then(function(obj){
-							re({
-								code: true,
-								msg: obj
-							});
-						}).catch(function(){
-							re({
-								code: false,
-								msg: null
-							});
-						})
-					});
-					return p;
-				}).then(function(response){
-					if(!response.code){
-						throw new Error("User not exist");
-					}
-					User_rating.findOne(response.msg.id)
-					.populate('fromUser')
-					.populate('toUser')
-					.then(function(rating){
-						resolve(rating);
+		var promise = new Promise(function(resolve, reject){
+			User.checkUserExist(fromUser).then(function(response){
+				if(!response){
+					throw new Error("User not exist");
+				}
+				return User.checkUserExist(toUser);
+			}).then(function(response){
+				if(!response){
+					throw new Error("User not exist");
+				}
+				var p = new Promise(function(re, rej){
+					User_rating.create({
+						fromUser: fromUser,
+						toUser: toUser,
+						comment: mess
+					}).then(function(obj){
+						re({
+							code: true,
+							msg: obj
+						});
+					}).catch(function(){
+						re({
+							code: false,
+							msg: null
+						});
 					})
-				}).catch(function(error){
-					reject(error);
+				});
+				return p;
+			}).then(function(response){
+				if(!response.code){
+					throw new Error("User not exist");
+				}
+				User_rating.findOne(response.msg.id)
+				.populate('fromUser')
+				.populate('toUser')
+				.then(function(rating){
+					resolve(rating);
 				})
-			});
-			return promise;
-		}
+			}).catch(function(error){
+				reject(error);
+			})
+		});
+		return promise;
+	}
 };
 
