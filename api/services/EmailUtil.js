@@ -10,14 +10,14 @@ module.exports = {
 			refreshToken: '1/fdiSKMbi9CkVitBVknmfL3laAfiLrS-ATQLEeU2E5Ik',
 		});
 
-		// var transporter = nodemailer.createTransport(smtpTransport({
-		// 	service: 'Gmail',
-		// 	auth: {
-		// 		xoauth2: generator
-		// 	}
-		// }));
+		var transporter = nodemailer.createTransport(smtpTransport({
+			service: 'Gmail',
+			auth: {
+				xoauth2: generator
+			}
+		}));
 
-		var transporter = nodemailer.createTransport();
+		// var transporter = nodemailer.createTransport();
 
 		var mailOptions = {
 			from: 'Book Sharing atWare<booksharing.atware@gmail.com>', // sender address
