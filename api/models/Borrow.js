@@ -158,9 +158,9 @@ module.exports = {
 		return promise;
 	},
 	afterCreate: function(value, cb){
-		console.log("value: ", value);
-		console.log("value: ", value.toUser);
-		console.log("value: ", value.toUser.email);
+		User.findOne(value.toUser).then(function(user){
+			console.log(user);
+		})
 		EmailUtil.sendEmail(value.toUser, "Book Sharing Notification", "You receive a new borrow request");
 		cb();
 	}
