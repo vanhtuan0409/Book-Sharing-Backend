@@ -158,11 +158,10 @@ module.exports = {
 		return promise;
 	},
 	afterCreate: function(value, cb){
-		User.findOne(value.toUser).then(function(user){
-			console.log(user);
+		User.findOne(value.toUser).then(function(user) {
+			EmailUtil.sendEmail(user.email, "Book Sharing Notification", "You receive a new borrow request");
+			cb();
 		})
-		EmailUtil.sendEmail(value.toUser, "Book Sharing Notification", "You receive a new borrow request");
-		cb();
 	}
 };
 
