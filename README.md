@@ -131,16 +131,16 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
 * Url: `api/user/:userId/addBook`,
 * Method: `POST`,
 * Data:
- ```
- {
+```
+{
     bookname: ...,
     author: ...,
     url: ...,
     description: ...,
     type: ...,
     isBook: true/false
- }
- ```
+}
+```
 * Response:
     * Success:
     ```
