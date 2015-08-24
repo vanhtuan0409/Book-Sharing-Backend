@@ -50,7 +50,6 @@
 	// }
 
     UserController: {
-        find: 'isLoggedIn',
         update: 'isLoggedIn',
         getStat: 'isLoggedIn',
         borrowBook: 'isLoggedIn',
