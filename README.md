@@ -49,7 +49,7 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
 ### Get authentication information
 * Url: `/api/auth`
 * Method: `GET`
-* Response: `User models`
+* Response:
     * Success:
     ```
     {
@@ -70,9 +70,25 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
 * Data:
 ```
 {
-    token: ... <--- facebook access token
+    token: ...
 }
 ```
+* Response:
+    * Success:
+    ```
+    {
+        error: false,
+        content: 'User Model'
+    }
+    ```
+    * Error:
+    ```
+    {
+        error: true,
+        content: 'error message'
+    }
+    ```
+
 ### Logout
 * Url: `/api/auth/logout`
 * Method: `GET`
@@ -95,7 +111,7 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
     returnDate: ..., (optional)
     message: ... (optional)
 }
-    ```
+```
 * Response:
     * Success:
     ```
