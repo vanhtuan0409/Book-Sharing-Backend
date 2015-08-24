@@ -159,7 +159,9 @@ module.exports = {
 	},
 	afterCreate: function(value, cb){
 		User.findOne(value.toUser).then(function(user) {
-			EmailUtil.sendEmail(user.email, "Book Sharing Notification", "You receive a new borrow request");
+			var text = "You receive a new borrow requestn";
+			text += "Try to visit <a href='http://128.199.166.254:8000/#/borrow'>this link</a> to find out more."
+			EmailUtil.sendEmail(user.email, "Book Sharing Notification", text);
 			cb();
 		})
 	}

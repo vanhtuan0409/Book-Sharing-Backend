@@ -10,23 +10,20 @@ module.exports = {
 			refreshToken: '1/fdiSKMbi9CkVitBVknmfL3laAfiLrS-ATQLEeU2E5Ik',
 		});
 
+		// var transporter = nodemailer.createTransport(smtpTransport({
+		// 	service: 'Gmail',
+		// 	auth: {
+		// 		xoauth2: generator
+		// 	}
+		// }));
 
-		generator.on('token', function(token) {
-			console.log('New token for %s: %s', token.user, token.accessToken);
-		});
-
-		var transporter = nodemailer.createTransport(smtpTransport({
-			service: 'Gmail',
-			auth: {
-				xoauth2: generator
-			}
-		}));
+		var transporter = nodemailer.createTransport();
 
 		var mailOptions = {
 			from: 'Book Sharing atWare<booksharing.atware@gmail.com>', // sender address
 			to: email,
 			subject: subject, // Subject line
-			text: text
+			html: text
 		};
 		transporter.sendMail(mailOptions, function(error, info) {
 			if (error) {
