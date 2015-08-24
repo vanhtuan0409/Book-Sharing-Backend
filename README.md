@@ -1,6 +1,5 @@
 # Book Sharing RESTful API DOCUMENT
 ## Getting Started
----
 ### Prerequisites
 You need git to clone the Book Sharing Backend repository. You can get git from http://git-scm.com/.  
 You also must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
@@ -22,7 +21,6 @@ sails start
 ```
 
 ## Directory Layout
----
 This directory layout is based on SailsJS framework. For more information please visit http://sailsjs.org/documentation/
 ```
 api/              <--- all source file location
@@ -35,7 +33,6 @@ config/           <--- sails config files, visit sails document for more detail
 ```
 
 ## RESTful API detail
----
 All of the models consists of pre-defined API from sailsJS blueprint which include:
 * find
 * findOne
@@ -71,33 +68,33 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
 * Url: `/api/auth`
 * Method: `POST`
 * Data:
-    ```
-    {
-        token: ... <--- facebook access token
-    }
-    ```
+```
+{
+    token: ... <--- facebook access token
+}
+```
 ### Logout
 * Url: `/api/auth/logout`
 * Method: `GET`
 * Response:
-    ```
-    {
-        error: false,
-        content: 'Logged out'
-    }
-    ```
+```
+{
+    error: false,
+    content: 'Logged out'
+}
+```
 ### Borrow book from User
 * Url: `api/user/:userId/borrow`
 * Method: `POST`
 * Data:
-    ```
-    {
-        requestToUser: ...,         <--- toUser id
-        bookId: ...,                <--- requested book id
-        startDate: ..., (optional)  <--- start date
-        returnDate: ..., (optional) <--- return date
-        message: ... (optional)     <--- borrow message
-    }
+```
+{
+    requestToUser: ...,
+    bookId: ...,
+    startDate: ..., (optional)
+    returnDate: ..., (optional)
+    message: ... (optional)
+}
     ```
 * Response:
     * Success:
@@ -118,16 +115,16 @@ For more details on blueprint api please visit http://sailsjs.org/documentation/
 * Url: `api/user/:userId/addBook`,
 * Method: `POST`,
 * Data:
-    ```
-    {
-        bookname: ...,
-        author: ...,
-        url: ...,
-        description: ...,
-        type: ...,
-        isBook: true/false  <--- true if add to book list, false if add to recommendation list
-    }
-    ```
+ ```
+ {
+     bookname: ...,
+     author: ...,
+     url: ...,
+     description: ...,
+     type: ...,
+     isBook: true/false
+ }
+ ```
 * Response:
     * Success:
     ```
