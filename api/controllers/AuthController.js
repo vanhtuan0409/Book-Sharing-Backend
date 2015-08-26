@@ -9,8 +9,8 @@ var crypto = require('crypto');
 
 module.exports = {
 	getCurrentUser: function(req,res){
-		if(sails.session.user){
-			return res.ok(sails.session.user);
+		if(req.session.user){
+			return res.ok(req.session.user);
 		} else {
 			return res.error("No authentication provided");
 		}
@@ -18,14 +18,17 @@ module.exports = {
 
 	login: function(req,res){
 		var token = req.param('token');
-		var proof = crypto.createHmac('SHA256', '04136abb6b35ae4a8aa394cf0f4250ba').update(token).digest('hex');
+		var proof = crypto.createHmac('SHA256', '78fbc87b43c04c0373c04e7a36a7e5fd').update(token).digest('hex');
 		var fbId = req.param('facebookId');
 
 		User.findOne({facebookId: fbId}).populateAll().then(function(user){
 			if(user){
 				User.getStat(user.id).then(function(stats){
 					user.stats = stats;
-					sails.session.user = user;
+					req.session.user = user;
+					req.session.save();
+
+					res.header('Access-Control-Allow-Credentials', 'true');
 					return res.ok(user);
 				})
 			} else {
@@ -39,6 +42,10 @@ module.exports = {
 		                url: data.picture.data.url,
 		                facebookId: data.id
 					}).then(function(data){
+						req.session.user = user;
+						req.session.save();
+
+						res.header('Access-Control-Allow-Credentials', 'true');
 						return res.ok(data);
 					}).catch(function(err){
 						return res.error(err);
@@ -50,7 +57,10 @@ module.exports = {
 		})
 	},
 	logout: function(req,res){
-		sails.session.user = null;
+		req.session.user = null;
+		req.session.save();
+
+		res.header('Access-Control-Allow-Credentials', 'true');
     	return res.ok("Logged out");
 	}
 };

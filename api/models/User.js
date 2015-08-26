@@ -5,7 +5,6 @@
  * @docs        :: http://sailsjs.org/#!documentation/models
  */
 
-var uuid = require('uuid');
 var md5 = require('MD5');
 
 module.exports = {
