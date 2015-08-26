@@ -18,7 +18,7 @@ module.exports = {
 
 	login: function(req,res){
 		var token = req.param('token');
-		var proof = crypto.createHmac('SHA256', '78fbc87b43c04c0373c04e7a36a7e5fd').update(token).digest('hex');
+		var proof = crypto.createHmac('SHA256', '04136abb6b35ae4a8aa394cf0f4250ba').update(token).digest('hex');
 		var fbId = req.param('facebookId');
 
 		User.findOne({facebookId: fbId}).populateAll().then(function(user){
